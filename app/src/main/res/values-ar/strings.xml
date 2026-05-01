@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">تطبيق المحصل</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="home">الرئيسية</string>
+</resources>

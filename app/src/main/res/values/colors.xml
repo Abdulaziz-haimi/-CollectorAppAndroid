@@ -1,0 +1,8 @@
+<resources>
+    <color name="primaryColor">#1565C0</color>
+    <color name="primaryDarkColor">#0D47A1</color>
+    <color name="accentColor">#FFB300</color>
+    <color name="errorColor">#B00020</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+</resources>

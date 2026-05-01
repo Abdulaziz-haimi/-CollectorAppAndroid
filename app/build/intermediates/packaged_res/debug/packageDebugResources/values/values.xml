@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools">
+    <color name="accentColor">#FFB300</color>
+    <color name="black">#000000</color>
+    <color name="errorColor">#B00020</color>
+    <color name="primaryColor">#1565C0</color>
+    <color name="primaryDarkColor">#0D47A1</color>
+    <color name="white">#FFFFFF</color>
+    <string name="app_name">Collector App</string>
+    <string name="home">Home</string>
+    <string name="login">Login</string>
+    <style name="Theme.CollectorApp" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryContainer">@color/primaryDarkColor</item>
+        <item name="colorSecondary">@color/accentColor</item>
+        <item name="android:statusBarColor">@color/primaryDarkColor</item>
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowLightStatusBar" ns1:targetApi="23">false</item>
+    </style>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+    <TextView android:id="@+id/tvMeterNo" android:layout_width="match_parent" android:layout_height="wrap_content" android:textStyle="bold" />
+    <TextView android:id="@+id/tvMeterLocation" android:layout_width="match_parent" android:layout_height="wrap_content" />
+    <TextView android:id="@+id/tvPrimary" android:layout_width="match_parent" android:layout_height="wrap_content" />
+</LinearLayout>

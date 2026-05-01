@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.watercollector.app.ui.login.LoginFragment"
+        android:label="تسجيل الدخول" />
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.watercollector.app.ui.home.HomeFragment"
+        android:label="الرئيسية" />
+
+    <fragment
+        android:id="@+id/subscribersFragment"
+        android:name="com.watercollector.app.ui.subscribers.SubscribersFragment"
+        android:label="المشتركون" />
+
+    <fragment
+        android:id="@+id/subscriberDetailsFragment"
+        android:name="com.watercollector.app.ui.subscriberdetails.SubscriberDetailsFragment"
+        android:label="تفاصيل المشترك">
+        <argument android:name="subscriberId" app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newReceiptFragment"
+        android:name="com.watercollector.app.ui.newreceipt.NewReceiptFragment"
+        android:label="تحصيل جديد">
+        <argument android:name="subscriberId" app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/localReceiptsFragment"
+        android:name="com.watercollector.app.ui.receipts.LocalReceiptsFragment"
+        android:label="سجل التحصيلات" />
+
+    <fragment
+        android:id="@+id/syncFragment"
+        android:name="com.watercollector.app.ui.sync.SyncFragment"
+        android:label="المزامنة" />
+</navigation>
