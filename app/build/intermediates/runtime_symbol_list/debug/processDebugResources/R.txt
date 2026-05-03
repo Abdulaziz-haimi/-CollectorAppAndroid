@@ -3929,6 +3929,7 @@ int layout select_dialog_singlechoice_material 0x7f0b0077
 int layout support_simple_spinner_dropdown_item 0x7f0b0078
 int navigation nav_graph 0x7f0d0000
 int plurals mtrl_badge_content_description 0x7f0e0000
+int raw mkcert_root_ca 0x7f120000
 int string abc_action_bar_home_description 0x7f0f0000
 int string abc_action_bar_up_description 0x7f0f0001
 int string abc_action_menu_overflow_description 0x7f0f0002
@@ -7379,3 +7380,4 @@ int styleable ViewTransition_upDuration 13
 int styleable ViewTransition_viewTransitionMode 14
 int[] styleable include { 0x7f030138 }
 int styleable include_constraintSet 0
+int xml network_security_config 0x7f130000

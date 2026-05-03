@@ -21,15 +21,20 @@
             android:id="@+id/etBaseUrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Base URL"
-            android:text="http://10.0.2.2:5099/" />
+            android:hint="رابط الخادم HTTPS"
+            android:text="https://192.168.0.135:8443/"
+            android:inputType="textUri"
+            android:singleLine="true"
+            android:layoutDirection="ltr"
+            android:textDirection="ltr" />
 
         <EditText
             android:id="@+id/etUserName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:hint="اسم المستخدم" />
+            android:hint="اسم المستخدم"
+            android:singleLine="true" />
 
         <EditText
             android:id="@+id/etPassword"
@@ -37,7 +42,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:hint="كلمة المرور"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:singleLine="true" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -60,5 +66,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:textColor="#B00020" />
+
     </LinearLayout>
 </ScrollView>

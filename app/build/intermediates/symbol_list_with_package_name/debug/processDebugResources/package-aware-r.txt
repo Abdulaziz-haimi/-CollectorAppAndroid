@@ -3930,6 +3930,7 @@ layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
 navigation nav_graph
 plurals mtrl_badge_content_description
+raw mkcert_root_ca
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description
@@ -5398,3 +5399,4 @@ styleable ViewPager2 android_orientation
 styleable ViewStubCompat android_id android_layout android_inflatedId
 styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration ifTagNotSet ifTagSet motionInterpolator motionTarget onStateTransition pathMotionArc setsTag transitionDisable upDuration viewTransitionMode
 styleable include constraintSet
+xml network_security_config
