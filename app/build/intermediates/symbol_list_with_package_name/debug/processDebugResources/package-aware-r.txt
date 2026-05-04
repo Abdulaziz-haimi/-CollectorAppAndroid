@@ -1399,10 +1399,12 @@ color abc_tint_seek_thumb
 color abc_tint_spinner
 color abc_tint_switch_track
 color accentColor
+color accentLightColor
 color accent_material_dark
 color accent_material_light
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
+color backgroundColor
 color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
@@ -2129,6 +2131,7 @@ color notification_action_color_filter
 color notification_icon_bg_color
 color primaryColor
 color primaryDarkColor
+color primaryLightColor
 color primary_dark_material_dark
 color primary_dark_material_light
 color primary_material_dark
@@ -2143,14 +2146,18 @@ color secondary_text_default_material_dark
 color secondary_text_default_material_light
 color secondary_text_disabled_material_dark
 color secondary_text_disabled_material_light
+color surfaceColor
 color switch_thumb_disabled_material_dark
 color switch_thumb_disabled_material_light
 color switch_thumb_material_dark
 color switch_thumb_material_light
 color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
+color textPrimaryColor
+color textSecondaryColor
 color tooltip_background_dark
 color tooltip_background_light
+color warningColor
 color white
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
@@ -3252,6 +3259,7 @@ id btnFullSync
 id btnLogin
 id btnLogout
 id btnNewReceipt
+id btnPrint
 id btnReceipts
 id btnSave
 id btnSubscribers
@@ -3674,10 +3682,12 @@ id tvAllocationSummary
 id tvAmount
 id tvBalance
 id tvCollectorName
+id tvCount
 id tvCreditDate
 id tvCreditRemaining
 id tvCreditsCount
 id tvDate
+id tvEmpty
 id tvInvoiceDate
 id tvInvoiceNo
 id tvInvoicesCount
@@ -3688,6 +3698,7 @@ id tvMeter
 id tvMeterLocation
 id tvMeterNo
 id tvName
+id tvPaymentMethod
 id tvPendingInfo
 id tvPhone
 id tvPrimary
@@ -3697,6 +3708,7 @@ id tvRemaining
 id tvResult
 id tvStatus
 id tvSubscriberId
+id tvTitle
 id unchecked
 id uniform
 id unlabeled

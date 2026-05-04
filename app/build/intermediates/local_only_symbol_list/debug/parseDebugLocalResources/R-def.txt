@@ -1,10 +1,17 @@
 R_DEF: Internal format may change without notice
 local
 color accentColor
+color accentLightColor
+color backgroundColor
 color black
 color errorColor
 color primaryColor
 color primaryDarkColor
+color primaryLightColor
+color surfaceColor
+color textPrimaryColor
+color textSecondaryColor
+color warningColor
 color white
 drawable ic_launcher
 drawable ic_launcher_round
@@ -15,6 +22,7 @@ id btnFullSync
 id btnLogin
 id btnLogout
 id btnNewReceipt
+id btnPrint
 id btnReceipts
 id btnSave
 id btnSubscribers
@@ -49,10 +57,12 @@ id tvAllocationSummary
 id tvAmount
 id tvBalance
 id tvCollectorName
+id tvCount
 id tvCreditDate
 id tvCreditRemaining
 id tvCreditsCount
 id tvDate
+id tvEmpty
 id tvInvoiceDate
 id tvInvoiceNo
 id tvInvoicesCount
@@ -63,6 +73,7 @@ id tvMeter
 id tvMeterLocation
 id tvMeterNo
 id tvName
+id tvPaymentMethod
 id tvPendingInfo
 id tvPhone
 id tvPrimary
@@ -72,6 +83,7 @@ id tvRemaining
 id tvResult
 id tvStatus
 id tvSubscriberId
+id tvTitle
 layout activity_main
 layout fragment_home
 layout fragment_local_receipts

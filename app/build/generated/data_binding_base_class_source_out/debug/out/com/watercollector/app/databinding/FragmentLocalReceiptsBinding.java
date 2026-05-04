@@ -4,30 +4,52 @@ package com.watercollector.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
+import androidx.viewbinding.ViewBindings;
 import com.watercollector.app.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
+import java.lang.String;
 
 public final class FragmentLocalReceiptsBinding implements ViewBinding {
   @NonNull
-  private final RecyclerView rootView;
+  private final LinearLayout rootView;
+
+  @NonNull
+  public final EditText etSearch;
 
   @NonNull
   public final RecyclerView rvReceipts;
 
-  private FragmentLocalReceiptsBinding(@NonNull RecyclerView rootView,
-      @NonNull RecyclerView rvReceipts) {
+  @NonNull
+  public final TextView tvCount;
+
+  @NonNull
+  public final TextView tvEmpty;
+
+  @NonNull
+  public final TextView tvTitle;
+
+  private FragmentLocalReceiptsBinding(@NonNull LinearLayout rootView, @NonNull EditText etSearch,
+      @NonNull RecyclerView rvReceipts, @NonNull TextView tvCount, @NonNull TextView tvEmpty,
+      @NonNull TextView tvTitle) {
     this.rootView = rootView;
+    this.etSearch = etSearch;
     this.rvReceipts = rvReceipts;
+    this.tvCount = tvCount;
+    this.tvEmpty = tvEmpty;
+    this.tvTitle = tvTitle;
   }
 
   @Override
   @NonNull
-  public RecyclerView getRoot() {
+  public LinearLayout getRoot() {
     return rootView;
   }
 
@@ -48,12 +70,44 @@ public final class FragmentLocalReceiptsBinding implements ViewBinding {
 
   @NonNull
   public static FragmentLocalReceiptsBinding bind(@NonNull View rootView) {
-    if (rootView == null) {
-      throw new NullPointerException("rootView");
+    // The body of this method is generated in a way you would not otherwise write.
+    // This is done to optimize the compiled bytecode for size and performance.
+    int id;
+    missingId: {
+      id = R.id.etSearch;
+      EditText etSearch = ViewBindings.findChildViewById(rootView, id);
+      if (etSearch == null) {
+        break missingId;
+      }
+
+      id = R.id.rvReceipts;
+      RecyclerView rvReceipts = ViewBindings.findChildViewById(rootView, id);
+      if (rvReceipts == null) {
+        break missingId;
+      }
+
+      id = R.id.tvCount;
+      TextView tvCount = ViewBindings.findChildViewById(rootView, id);
+      if (tvCount == null) {
+        break missingId;
+      }
+
+      id = R.id.tvEmpty;
+      TextView tvEmpty = ViewBindings.findChildViewById(rootView, id);
+      if (tvEmpty == null) {
+        break missingId;
+      }
+
+      id = R.id.tvTitle;
+      TextView tvTitle = ViewBindings.findChildViewById(rootView, id);
+      if (tvTitle == null) {
+        break missingId;
+      }
+
+      return new FragmentLocalReceiptsBinding((LinearLayout) rootView, etSearch, rvReceipts,
+          tvCount, tvEmpty, tvTitle);
     }
-
-    RecyclerView rvReceipts = (RecyclerView) rootView;
-
-    return new FragmentLocalReceiptsBinding((RecyclerView) rootView, rvReceipts);
+    String missingId = rootView.getResources().getResourceName(id);
+    throw new NullPointerException("Missing required view with ID: ".concat(missingId));
   }
 }

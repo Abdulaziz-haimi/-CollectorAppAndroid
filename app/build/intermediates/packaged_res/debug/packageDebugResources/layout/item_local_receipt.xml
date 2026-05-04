@@ -1,19 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp">
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="8dp"
+    android:layoutDirection="rtl"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardBackgroundColor="#FFFFFF"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="4dp"
+    app:strokeColor="#EAF3FF"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="16dp">
 
-        <TextView android:id="@+id/tvReceiptNo" android:layout_width="match_parent" android:layout_height="wrap_content" android:textStyle="bold" />
-        <TextView android:id="@+id/tvAmount" android:layout_width="match_parent" android:layout_height="wrap_content" />
-        <TextView android:id="@+id/tvDate" android:layout_width="match_parent" android:layout_height="wrap_content" />
-        <TextView android:id="@+id/tvStatus" android:layout_width="match_parent" android:layout_height="wrap_content" android:textStyle="bold" />
-        <TextView android:id="@+id/tvReason" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#B00020" />
+        <TextView
+            android:id="@+id/tvReceiptNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="رقم الإيصال"
+            android:textColor="#111827"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvSubscriberId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="رقم العميل"
+            android:textColor="#6B7280"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="#EAF3FF"
+            android:padding="10dp"
+            android:text="المبلغ"
+            android:textColor="#073B73"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPaymentMethod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="نوع السداد"
+            android:textColor="#6B7280"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="التاريخ"
+            android:textColor="#6B7280"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#E7FFF7"
+            android:padding="8dp"
+            android:text="الحالة"
+            android:textColor="#007A55"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvReason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text=""
+            android:textColor="#B00020"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnPrint"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="14dp"
+            android:backgroundTint="#0B5CAD"
+            android:text="طباعة الإيصال"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
+
 </com.google.android.material.card.MaterialCardView>

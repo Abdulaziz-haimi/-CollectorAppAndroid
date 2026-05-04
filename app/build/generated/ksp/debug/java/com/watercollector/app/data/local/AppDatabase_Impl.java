@@ -11,6 +11,8 @@ import androidx.room.util.DBUtil;
 import androidx.room.util.TableInfo;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
+import com.watercollector.app.data.local.dao.CachedLoginDao;
+import com.watercollector.app.data.local.dao.CachedLoginDao_Impl;
 import com.watercollector.app.data.local.dao.CreditDao;
 import com.watercollector.app.data.local.dao.CreditDao_Impl;
 import com.watercollector.app.data.local.dao.InvoiceDao;
@@ -46,10 +48,12 @@ public final class AppDatabase_Impl extends AppDatabase {
 
   private volatile ReceiptDraftDao _receiptDraftDao;
 
+  private volatile CachedLoginDao _cachedLoginDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(1) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(2) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS `local_subscribers` (`subscriberId` INTEGER NOT NULL, `subscriberName` TEXT NOT NULL, `phoneNumber` TEXT, `address` TEXT, `primaryMeterId` INTEGER, `primaryMeterNumber` TEXT, `primaryMeterLocation` TEXT, `currentDue` REAL NOT NULL, `currentCredit` REAL NOT NULL, `currentBalance` REAL NOT NULL, `lastInvoiceId` INTEGER, `lastInvoiceNumber` TEXT, `lastInvoiceDate` TEXT, `lastInvoiceTotal` REAL, `lastInvoiceRemaining` REAL, PRIMARY KEY(`subscriberId`))");
@@ -58,8 +62,9 @@ public final class AppDatabase_Impl extends AppDatabase {
         db.execSQL("CREATE TABLE IF NOT EXISTS `local_subscriber_credits` (`creditId` INTEGER NOT NULL, `subscriberId` INTEGER NOT NULL, `paymentId` INTEGER, `receiptId` INTEGER, `meterId` INTEGER, `creditDate` TEXT NOT NULL, `amountTotal` REAL NOT NULL, `amountRemaining` REAL NOT NULL, `notes` TEXT, PRIMARY KEY(`creditId`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS `local_receipt_drafts` (`localReceiptId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `localPaymentGuid` TEXT NOT NULL, `localReceiptNo` TEXT NOT NULL, `subscriberId` INTEGER NOT NULL, `collectorId` INTEGER NOT NULL, `paymentDate` TEXT NOT NULL, `totalReceived` REAL NOT NULL, `paymentMethod` TEXT NOT NULL, `notes` TEXT, `syncStatus` TEXT NOT NULL, `syncBatchRef` TEXT, `serverImportId` INTEGER, `serverStatus` TEXT, `rejectedReason` TEXT, `createdAt` TEXT NOT NULL, `updatedAt` TEXT, `sentAt` TEXT)");
         db.execSQL("CREATE TABLE IF NOT EXISTS `local_receipt_draft_lines` (`localReceiptLineId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `localReceiptId` INTEGER NOT NULL, `invoiceId` INTEGER, `appliedAmount` REAL NOT NULL, `applicationType` TEXT NOT NULL, `notes` TEXT)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `cached_login` (`userName` TEXT NOT NULL, `passwordHash` TEXT NOT NULL, `baseUrl` TEXT NOT NULL, `token` TEXT NOT NULL, `collectorId` INTEGER NOT NULL, `collectorName` TEXT, `fullName` TEXT, `deviceCode` TEXT NOT NULL, `cachedAt` INTEGER NOT NULL, PRIMARY KEY(`userName`))");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4722e836546f7a348b0ccd20720dc8ea')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4a3561184e432e649dcbe2fbc962f37c')");
       }
 
       @Override
@@ -70,6 +75,7 @@ public final class AppDatabase_Impl extends AppDatabase {
         db.execSQL("DROP TABLE IF EXISTS `local_subscriber_credits`");
         db.execSQL("DROP TABLE IF EXISTS `local_receipt_drafts`");
         db.execSQL("DROP TABLE IF EXISTS `local_receipt_draft_lines`");
+        db.execSQL("DROP TABLE IF EXISTS `cached_login`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -244,9 +250,28 @@ public final class AppDatabase_Impl extends AppDatabase {
                   + " Expected:\n" + _infoLocalReceiptDraftLines + "\n"
                   + " Found:\n" + _existingLocalReceiptDraftLines);
         }
+        final HashMap<String, TableInfo.Column> _columnsCachedLogin = new HashMap<String, TableInfo.Column>(9);
+        _columnsCachedLogin.put("userName", new TableInfo.Column("userName", "TEXT", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCachedLogin.put("passwordHash", new TableInfo.Column("passwordHash", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCachedLogin.put("baseUrl", new TableInfo.Column("baseUrl", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCachedLogin.put("token", new TableInfo.Column("token", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCachedLogin.put("collectorId", new TableInfo.Column("collectorId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCachedLogin.put("collectorName", new TableInfo.Column("collectorName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCachedLogin.put("fullName", new TableInfo.Column("fullName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCachedLogin.put("deviceCode", new TableInfo.Column("deviceCode", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsCachedLogin.put("cachedAt", new TableInfo.Column("cachedAt", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysCachedLogin = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesCachedLogin = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoCachedLogin = new TableInfo("cached_login", _columnsCachedLogin, _foreignKeysCachedLogin, _indicesCachedLogin);
+        final TableInfo _existingCachedLogin = TableInfo.read(db, "cached_login");
+        if (!_infoCachedLogin.equals(_existingCachedLogin)) {
+          return new RoomOpenHelper.ValidationResult(false, "cached_login(com.watercollector.app.data.local.entities.CachedLoginEntity).\n"
+                  + " Expected:\n" + _infoCachedLogin + "\n"
+                  + " Found:\n" + _existingCachedLogin);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "4722e836546f7a348b0ccd20720dc8ea", "cd1cd8b95840aa0c6cafc9454fba6014");
+    }, "4a3561184e432e649dcbe2fbc962f37c", "86e2092c47d95054b4badc9f6b332f97");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -257,7 +282,7 @@ public final class AppDatabase_Impl extends AppDatabase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "local_subscribers","local_subscriber_meters","local_open_invoices","local_subscriber_credits","local_receipt_drafts","local_receipt_draft_lines");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "local_subscribers","local_subscriber_meters","local_open_invoices","local_subscriber_credits","local_receipt_drafts","local_receipt_draft_lines","cached_login");
   }
 
   @Override
@@ -272,6 +297,7 @@ public final class AppDatabase_Impl extends AppDatabase {
       _db.execSQL("DELETE FROM `local_subscriber_credits`");
       _db.execSQL("DELETE FROM `local_receipt_drafts`");
       _db.execSQL("DELETE FROM `local_receipt_draft_lines`");
+      _db.execSQL("DELETE FROM `cached_login`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -291,6 +317,7 @@ public final class AppDatabase_Impl extends AppDatabase {
     _typeConvertersMap.put(MeterDao.class, MeterDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(CreditDao.class, CreditDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(ReceiptDraftDao.class, ReceiptDraftDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(CachedLoginDao.class, CachedLoginDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -375,6 +402,20 @@ public final class AppDatabase_Impl extends AppDatabase {
           _receiptDraftDao = new ReceiptDraftDao_Impl(this);
         }
         return _receiptDraftDao;
+      }
+    }
+  }
+
+  @Override
+  public CachedLoginDao cachedLoginDao() {
+    if (_cachedLoginDao != null) {
+      return _cachedLoginDao;
+    } else {
+      synchronized(this) {
+        if(_cachedLoginDao == null) {
+          _cachedLoginDao = new CachedLoginDao_Impl(this);
+        }
+        return _cachedLoginDao;
       }
     }
   }

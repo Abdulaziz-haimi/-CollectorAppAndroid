@@ -1,8 +1,19 @@
 <resources>
-    <color name="primaryColor">#1565C0</color>
-    <color name="primaryDarkColor">#0D47A1</color>
-    <color name="accentColor">#FFB300</color>
+    <color name="primaryColor">#0B5CAD</color>
+    <color name="primaryDarkColor">#073B73</color>
+    <color name="primaryLightColor">#EAF3FF</color>
+
+    <color name="accentColor">#00A676</color>
+    <color name="accentLightColor">#E7FFF7</color>
+
+    <color name="backgroundColor">#F5F7FB</color>
+    <color name="surfaceColor">#FFFFFF</color>
+    <color name="textPrimaryColor">#111827</color>
+    <color name="textSecondaryColor">#6B7280</color>
+
     <color name="errorColor">#B00020</color>
+    <color name="warningColor">#F59E0B</color>
+
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 </resources>

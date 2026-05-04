@@ -4,6 +4,7 @@ package com.watercollector.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,10 +21,16 @@ public final class ItemLocalReceiptBinding implements ViewBinding {
   private final MaterialCardView rootView;
 
   @NonNull
+  public final Button btnPrint;
+
+  @NonNull
   public final TextView tvAmount;
 
   @NonNull
   public final TextView tvDate;
+
+  @NonNull
+  public final TextView tvPaymentMethod;
 
   @NonNull
   public final TextView tvReason;
@@ -34,15 +41,22 @@ public final class ItemLocalReceiptBinding implements ViewBinding {
   @NonNull
   public final TextView tvStatus;
 
-  private ItemLocalReceiptBinding(@NonNull MaterialCardView rootView, @NonNull TextView tvAmount,
-      @NonNull TextView tvDate, @NonNull TextView tvReason, @NonNull TextView tvReceiptNo,
-      @NonNull TextView tvStatus) {
+  @NonNull
+  public final TextView tvSubscriberId;
+
+  private ItemLocalReceiptBinding(@NonNull MaterialCardView rootView, @NonNull Button btnPrint,
+      @NonNull TextView tvAmount, @NonNull TextView tvDate, @NonNull TextView tvPaymentMethod,
+      @NonNull TextView tvReason, @NonNull TextView tvReceiptNo, @NonNull TextView tvStatus,
+      @NonNull TextView tvSubscriberId) {
     this.rootView = rootView;
+    this.btnPrint = btnPrint;
     this.tvAmount = tvAmount;
     this.tvDate = tvDate;
+    this.tvPaymentMethod = tvPaymentMethod;
     this.tvReason = tvReason;
     this.tvReceiptNo = tvReceiptNo;
     this.tvStatus = tvStatus;
+    this.tvSubscriberId = tvSubscriberId;
   }
 
   @Override
@@ -72,6 +86,12 @@ public final class ItemLocalReceiptBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btnPrint;
+      Button btnPrint = ViewBindings.findChildViewById(rootView, id);
+      if (btnPrint == null) {
+        break missingId;
+      }
+
       id = R.id.tvAmount;
       TextView tvAmount = ViewBindings.findChildViewById(rootView, id);
       if (tvAmount == null) {
@@ -81,6 +101,12 @@ public final class ItemLocalReceiptBinding implements ViewBinding {
       id = R.id.tvDate;
       TextView tvDate = ViewBindings.findChildViewById(rootView, id);
       if (tvDate == null) {
+        break missingId;
+      }
+
+      id = R.id.tvPaymentMethod;
+      TextView tvPaymentMethod = ViewBindings.findChildViewById(rootView, id);
+      if (tvPaymentMethod == null) {
         break missingId;
       }
 
@@ -102,8 +128,14 @@ public final class ItemLocalReceiptBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemLocalReceiptBinding((MaterialCardView) rootView, tvAmount, tvDate, tvReason,
-          tvReceiptNo, tvStatus);
+      id = R.id.tvSubscriberId;
+      TextView tvSubscriberId = ViewBindings.findChildViewById(rootView, id);
+      if (tvSubscriberId == null) {
+        break missingId;
+      }
+
+      return new ItemLocalReceiptBinding((MaterialCardView) rootView, btnPrint, tvAmount, tvDate,
+          tvPaymentMethod, tvReason, tvReceiptNo, tvStatus, tvSubscriberId);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

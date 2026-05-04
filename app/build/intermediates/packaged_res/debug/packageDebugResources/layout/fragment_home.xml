@@ -1,59 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F7FB"
+    android:fillViewport="true"
+    android:layoutDirection="rtl">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="18dp">
 
-        <TextView
-            android:id="@+id/tvCollectorName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:background="#0B5CAD"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/tvCollectorName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="اسم المحصل"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPendingInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="العمليات المعلقة: 0"
+                android:textColor="#EAF3FF"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvLastSyncInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="آخر مزامنة: لا يوجد"
+                android:textColor="#EAF3FF"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="القائمة الرئيسية"
+            android:textColor="#111827"
+            android:textSize="20sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvPendingInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
-
-        <TextView
-            android:id="@+id/tvLastSyncInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
 
         <Button
             android:id="@+id/btnSubscribers"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="المشتركون" />
+            android:layout_height="56dp"
+            android:layout_marginTop="14dp"
+            android:text="المشتركون"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#0B5CAD" />
 
         <Button
             android:id="@+id/btnReceipts"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="سجل التحصيلات" />
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:text="سجل التحصيلات"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#00A676" />
 
         <Button
             android:id="@+id/btnSync"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="المزامنة" />
+            android:layout_height="56dp"
+            android:layout_marginTop="10dp"
+            android:text="المزامنة"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:backgroundTint="#F59E0B" />
 
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="خروج" />
+            android:layout_height="54dp"
+            android:layout_marginTop="24dp"
+            android:text="خروج"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:backgroundTint="#B00020" />
+
     </LinearLayout>
+
 </ScrollView>

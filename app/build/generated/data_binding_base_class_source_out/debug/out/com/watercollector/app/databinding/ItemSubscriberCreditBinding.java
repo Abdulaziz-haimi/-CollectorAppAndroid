@@ -4,12 +4,12 @@ package com.watercollector.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.card.MaterialCardView;
 import com.watercollector.app.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -17,7 +17,7 @@ import java.lang.String;
 
 public final class ItemSubscriberCreditBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final MaterialCardView rootView;
 
   @NonNull
   public final TextView tvCreditDate;
@@ -25,7 +25,7 @@ public final class ItemSubscriberCreditBinding implements ViewBinding {
   @NonNull
   public final TextView tvCreditRemaining;
 
-  private ItemSubscriberCreditBinding(@NonNull LinearLayout rootView,
+  private ItemSubscriberCreditBinding(@NonNull MaterialCardView rootView,
       @NonNull TextView tvCreditDate, @NonNull TextView tvCreditRemaining) {
     this.rootView = rootView;
     this.tvCreditDate = tvCreditDate;
@@ -34,7 +34,7 @@ public final class ItemSubscriberCreditBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public MaterialCardView getRoot() {
     return rootView;
   }
 
@@ -71,7 +71,7 @@ public final class ItemSubscriberCreditBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemSubscriberCreditBinding((LinearLayout) rootView, tvCreditDate,
+      return new ItemSubscriberCreditBinding((MaterialCardView) rootView, tvCreditDate,
           tvCreditRemaining);
     }
     String missingId = rootView.getResources().getResourceName(id);

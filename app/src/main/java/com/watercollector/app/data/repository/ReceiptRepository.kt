@@ -8,11 +8,21 @@ import java.util.Date
 import java.util.Locale
 import java.util.UUID
 
+data class SavedReceiptInfo(
+    val localReceiptId: Long,
+    val localPaymentGuid: String,
+    val localReceiptNo: String,
+    val paymentDate: String,
+    val createdAt: String
+)
+
 class ReceiptRepository(
     private val receiptDraftDao: ReceiptDraftDao
 ) {
     fun observeAll() = receiptDraftDao.observeAll()
+
     fun observePending() = receiptDraftDao.observePending()
+
     suspend fun getPendingWithLines() = receiptDraftDao.getPendingWithLines()
 
     suspend fun createDraft(
@@ -22,12 +32,49 @@ class ReceiptRepository(
         paymentMethod: String,
         notes: String?,
         allocations: List<Pair<Int?, Double>>
-    ): Long {
+    ): SavedReceiptInfo {
+        require(subscriberId > 0) {
+            "رقم المشترك غير صحيح"
+        }
+
+        require(collectorId > 0) {
+            "رقم المحصل غير صحيح"
+        }
+
+        require(totalReceived > 0) {
+            "مبلغ التحصيل يجب أن يكون أكبر من صفر"
+        }
+
+        val validAllocations = allocations.filter { (_, amount) ->
+            amount > 0
+        }
+
+        require(validAllocations.isNotEmpty()) {
+            "لا توجد مبالغ صالحة للحفظ"
+        }
+
         val now = Date()
-        val dateOnly = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(now)
-        val nowIso = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).format(now)
-        val receiptNo = "MOB-${SimpleDateFormat("yyyyMMddHHmmss", Locale.US).format(now)}"
-        val guid = UUID.randomUUID().toString().replace("-", "")
+
+        val dateOnly = SimpleDateFormat(
+            "yyyy-MM-dd",
+            Locale.US
+        ).format(now)
+
+        val nowIso = SimpleDateFormat(
+            "yyyy-MM-dd'T'HH:mm:ss",
+            Locale.US
+        ).format(now)
+
+        val receiptNo = "MOB-${
+            SimpleDateFormat(
+                "yyyyMMddHHmmss",
+                Locale.US
+            ).format(now)
+        }"
+
+        val guid = UUID.randomUUID()
+            .toString()
+            .replace("-", "")
 
         val draft = LocalReceiptDraftEntity(
             localPaymentGuid = guid,
@@ -48,17 +95,32 @@ class ReceiptRepository(
             sentAt = null
         )
 
-        val lines = allocations.filter { it.second > 0 }.map { (invoiceId, amount) ->
+        val lines = validAllocations.map { (invoiceId, amount) ->
             LocalReceiptDraftLineEntity(
                 localReceiptId = 0,
                 invoiceId = invoiceId,
                 appliedAmount = amount,
-                applicationType = if (invoiceId == null) "AdvanceCredit" else "InvoicePayment",
+                applicationType = if (invoiceId == null) {
+                    "AdvanceCredit"
+                } else {
+                    "InvoicePayment"
+                },
                 notes = null
             )
         }
 
-        return receiptDraftDao.insertDraftWithLines(draft, lines)
+        val localReceiptId = receiptDraftDao.insertDraftWithLines(
+            draft = draft,
+            lines = lines
+        )
+
+        return SavedReceiptInfo(
+            localReceiptId = localReceiptId,
+            localPaymentGuid = guid,
+            localReceiptNo = receiptNo,
+            paymentDate = dateOnly,
+            createdAt = nowIso
+        )
     }
 
     suspend fun updateSyncState(
@@ -71,15 +133,17 @@ class ReceiptRepository(
         updatedAt: String?,
         sentAt: String?
     ) = receiptDraftDao.updateSyncState(
-        localReceiptId,
-        syncStatus,
-        syncBatchRef,
-        serverImportId,
-        serverStatus,
-        rejectedReason,
-        updatedAt,
-        sentAt
+        localReceiptId = localReceiptId,
+        syncStatus = syncStatus,
+        syncBatchRef = syncBatchRef,
+        serverImportId = serverImportId,
+        serverStatus = serverStatus,
+        rejectedReason = rejectedReason,
+        updatedAt = updatedAt,
+        sentAt = sentAt
     )
 
-    suspend fun findLocalReceiptIdByGuid(guid: String) = receiptDraftDao.findLocalReceiptIdByGuid(guid)
+    suspend fun findLocalReceiptIdByGuid(
+        guid: String
+    ) = receiptDraftDao.findLocalReceiptIdByGuid(guid)
 }
