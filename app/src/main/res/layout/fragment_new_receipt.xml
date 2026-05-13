@@ -1,83 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:fillViewport="true"
+    android:layoutDirection="rtl">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="16dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/surfaceColor"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/primaryLightColor"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp">
+
+                <TextView
+                    android:id="@+id/tvSubscriberId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="بيانات المشترك"
+                    android:textColor="@color/textPrimaryColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvInvoicesHint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="أدخل مبلغ التحصيل ثم وزّعه على الفواتير"
+                    android:textColor="@color/textSecondaryColor"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/etAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="14dp"
+                    android:background="@android:drawable/edit_text"
+                    android:hint="إجمالي المبلغ"
+                    android:inputType="numberDecimal"
+                    android:paddingStart="14dp"
+                    android:paddingEnd="14dp"
+                    android:singleLine="true"
+                    android:textColor="@color/textPrimaryColor"
+                    android:textColorHint="@color/textSecondaryColor" />
+
+                <Spinner
+                    android:id="@+id/spPaymentMethod"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginTop="12dp" />
+
+                <EditText
+                    android:id="@+id/etNotes"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@android:drawable/edit_text"
+                    android:gravity="top"
+                    android:hint="ملاحظات"
+                    android:inputType="textMultiLine"
+                    android:minLines="3"
+                    android:padding="14dp"
+                    android:textColor="@color/textPrimaryColor"
+                    android:textColorHint="@color/textSecondaryColor" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            android:id="@+id/tvSubscriberId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/tvInvoicesHint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
-
-        <EditText
-            android:id="@+id/etAmount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="إجمالي المبلغ"
-            android:inputType="numberDecimal" />
-
-        <Spinner
-            android:id="@+id/spPaymentMethod"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp" />
-
-        <EditText
-            android:id="@+id/etNotes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="ملاحظات"
-            android:minLines="3"
-            android:gravity="top"
-            android:inputType="textMultiLine" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="22dp"
             android:text="توزيع المبلغ على الفواتير"
+            android:textColor="@color/textPrimaryColor"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvAllocations"
             android:layout_width="match_parent"
             android:layout_height="280dp"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="10dp"
+            android:background="@color/surfaceColor"
+            android:nestedScrollingEnabled="false"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp" />
 
         <Button
             android:id="@+id/btnAutoDistribute"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="توزيع تلقائي على الأقدم" />
+            android:layout_height="54dp"
+            android:layout_marginTop="14dp"
+            android:backgroundTint="@color/warningColor"
+            android:text="توزيع تلقائي على الأقدم"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvAllocationSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/primaryLightColor"
+            android:padding="12dp"
+            android:textColor="@color/primaryDarkColor"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginTop="16dp"
-            android:text="حفظ المسودة" />
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/accentColor"
+            android:text="حفظ المسودة"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
+
 </ScrollView>

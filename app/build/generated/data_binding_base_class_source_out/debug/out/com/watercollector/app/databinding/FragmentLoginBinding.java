@@ -23,6 +23,9 @@ public final class FragmentLoginBinding implements ViewBinding {
   private final ScrollView rootView;
 
   @NonNull
+  public final Button btnFindServer;
+
+  @NonNull
   public final Button btnLogin;
 
   @NonNull
@@ -40,10 +43,11 @@ public final class FragmentLoginBinding implements ViewBinding {
   @NonNull
   public final TextView tvMessage;
 
-  private FragmentLoginBinding(@NonNull ScrollView rootView, @NonNull Button btnLogin,
-      @NonNull EditText etBaseUrl, @NonNull EditText etPassword, @NonNull EditText etUserName,
-      @NonNull ProgressBar progressBar, @NonNull TextView tvMessage) {
+  private FragmentLoginBinding(@NonNull ScrollView rootView, @NonNull Button btnFindServer,
+      @NonNull Button btnLogin, @NonNull EditText etBaseUrl, @NonNull EditText etPassword,
+      @NonNull EditText etUserName, @NonNull ProgressBar progressBar, @NonNull TextView tvMessage) {
     this.rootView = rootView;
+    this.btnFindServer = btnFindServer;
     this.btnLogin = btnLogin;
     this.etBaseUrl = etBaseUrl;
     this.etPassword = etPassword;
@@ -79,6 +83,12 @@ public final class FragmentLoginBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btnFindServer;
+      Button btnFindServer = ViewBindings.findChildViewById(rootView, id);
+      if (btnFindServer == null) {
+        break missingId;
+      }
+
       id = R.id.btnLogin;
       Button btnLogin = ViewBindings.findChildViewById(rootView, id);
       if (btnLogin == null) {
@@ -115,8 +125,8 @@ public final class FragmentLoginBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentLoginBinding((ScrollView) rootView, btnLogin, etBaseUrl, etPassword,
-          etUserName, progressBar, tvMessage);
+      return new FragmentLoginBinding((ScrollView) rootView, btnFindServer, btnLogin, etBaseUrl,
+          etPassword, etUserName, progressBar, tvMessage);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

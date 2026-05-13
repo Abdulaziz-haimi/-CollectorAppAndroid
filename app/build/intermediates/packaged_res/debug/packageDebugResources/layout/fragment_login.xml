@@ -47,7 +47,14 @@
             android:background="@android:drawable/edit_text"
             android:textColor="#111111"
             android:textColorHint="#777777" />
-
+        <Button
+            android:id="@+id/btnFindServer"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:text="بحث تلقائي عن السيرفر"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#00A676" />
         <EditText
             android:id="@+id/etUserName"
             android:layout_width="match_parent"

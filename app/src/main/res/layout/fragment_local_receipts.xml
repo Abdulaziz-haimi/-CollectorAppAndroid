@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     android:orientation="vertical"
     android:padding="16dp"
     android:layoutDirection="rtl">
@@ -11,43 +12,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="سجل التحصيل"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:paddingBottom="12dp" />
+        android:textColor="@color/textPrimaryColor"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="بحث برقم الإيصال أو رقم العميل أو المبلغ أو الحالة"
-        android:singleLine="true"
+        android:layout_height="54dp"
+        android:layout_marginTop="14dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="بحث برقم الإيصال أو العميل أو المبلغ أو الحالة"
         android:inputType="text"
-        android:padding="12dp" />
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:singleLine="true"
+        android:textColor="@color/textPrimaryColor"
+        android:textColorHint="@color/textSecondaryColor" />
 
     <TextView
         android:id="@+id/tvCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="عدد الإيصالات: 0"
+        android:textColor="@color/textSecondaryColor"
         android:textSize="14sp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvEmpty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="لا توجد إيصالات"
-        android:textSize="16sp"
+        android:layout_marginTop="18dp"
+        android:background="@color/surfaceColor"
         android:gravity="center"
-        android:visibility="gone"
-        android:padding="24dp" />
+        android:padding="24dp"
+        android:text="لا توجد إيصالات"
+        android:textColor="@color/textSecondaryColor"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReceipts"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_marginTop="12dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingTop="4dp"
+        android:paddingBottom="12dp" />
 
 </LinearLayout>

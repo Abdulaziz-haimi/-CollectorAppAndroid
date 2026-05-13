@@ -4,12 +4,13 @@
         <item name="colorPrimaryContainer">@color/primaryDarkColor</item>
         <item name="colorSecondary">@color/accentColor</item>
 
-        <item name="android:fontFamily">sans</item>
         <item name="android:windowBackground">@color/backgroundColor</item>
+        <item name="android:fontFamily">sans</item>
+
         <item name="android:statusBarColor">@color/primaryDarkColor</item>
         <item name="android:navigationBarColor">@color/backgroundColor</item>
-        <item name="android:windowLightNavigationBar" ns1:targetApi="27">true</item>
         <item name="android:windowLightStatusBar" ns1:targetApi="23">false</item>
+        <item name="android:windowLightNavigationBar" ns1:targetApi="27">true</item>
 
         <item name="android:layoutDirection">rtl</item>
         <item name="android:textDirection">rtl</item>

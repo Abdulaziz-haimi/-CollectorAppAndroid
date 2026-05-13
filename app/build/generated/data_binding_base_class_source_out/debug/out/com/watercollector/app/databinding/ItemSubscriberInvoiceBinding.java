@@ -4,12 +4,12 @@ package com.watercollector.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.card.MaterialCardView;
 import com.watercollector.app.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -17,7 +17,7 @@ import java.lang.String;
 
 public final class ItemSubscriberInvoiceBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final MaterialCardView rootView;
 
   @NonNull
   public final TextView tvInvoiceDate;
@@ -28,7 +28,7 @@ public final class ItemSubscriberInvoiceBinding implements ViewBinding {
   @NonNull
   public final TextView tvRemaining;
 
-  private ItemSubscriberInvoiceBinding(@NonNull LinearLayout rootView,
+  private ItemSubscriberInvoiceBinding(@NonNull MaterialCardView rootView,
       @NonNull TextView tvInvoiceDate, @NonNull TextView tvInvoiceNo,
       @NonNull TextView tvRemaining) {
     this.rootView = rootView;
@@ -39,7 +39,7 @@ public final class ItemSubscriberInvoiceBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public MaterialCardView getRoot() {
     return rootView;
   }
 
@@ -82,8 +82,8 @@ public final class ItemSubscriberInvoiceBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemSubscriberInvoiceBinding((LinearLayout) rootView, tvInvoiceDate, tvInvoiceNo,
-          tvRemaining);
+      return new ItemSubscriberInvoiceBinding((MaterialCardView) rootView, tvInvoiceDate,
+          tvInvoiceNo, tvRemaining);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

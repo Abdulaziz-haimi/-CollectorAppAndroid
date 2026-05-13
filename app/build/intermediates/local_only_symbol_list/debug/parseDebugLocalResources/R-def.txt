@@ -18,6 +18,7 @@ drawable ic_launcher_round
 id btnAutoDistribute
 id btnDecisions
 id btnDownload
+id btnFindServer
 id btnFullSync
 id btnLogin
 id btnLogout

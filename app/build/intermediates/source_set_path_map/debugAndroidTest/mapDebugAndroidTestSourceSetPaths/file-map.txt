@@ -1,0 +1,4 @@
+com.watercollector.app.test.app-androidTest-0 C:\Users\Abdulaziz\CollectorAppAndroid\app\build\generated\res\resValues\androidTest\debug
+com.watercollector.app.test.app-mergeDebugAndroidTestResources-1 C:\Users\Abdulaziz\CollectorAppAndroid\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.watercollector.app.test.app-mergeDebugAndroidTestResources-2 C:\Users\Abdulaziz\CollectorAppAndroid\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.watercollector.app.test.app-debugAndroidTest-3 C:\Users\Abdulaziz\CollectorAppAndroid\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources

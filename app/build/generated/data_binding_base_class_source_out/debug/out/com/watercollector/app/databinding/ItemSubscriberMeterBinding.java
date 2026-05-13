@@ -4,12 +4,12 @@ package com.watercollector.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.card.MaterialCardView;
 import com.watercollector.app.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -17,7 +17,7 @@ import java.lang.String;
 
 public final class ItemSubscriberMeterBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final MaterialCardView rootView;
 
   @NonNull
   public final TextView tvMeterLocation;
@@ -28,7 +28,7 @@ public final class ItemSubscriberMeterBinding implements ViewBinding {
   @NonNull
   public final TextView tvPrimary;
 
-  private ItemSubscriberMeterBinding(@NonNull LinearLayout rootView,
+  private ItemSubscriberMeterBinding(@NonNull MaterialCardView rootView,
       @NonNull TextView tvMeterLocation, @NonNull TextView tvMeterNo, @NonNull TextView tvPrimary) {
     this.rootView = rootView;
     this.tvMeterLocation = tvMeterLocation;
@@ -38,7 +38,7 @@ public final class ItemSubscriberMeterBinding implements ViewBinding {
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public MaterialCardView getRoot() {
     return rootView;
   }
 
@@ -81,7 +81,7 @@ public final class ItemSubscriberMeterBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemSubscriberMeterBinding((LinearLayout) rootView, tvMeterLocation, tvMeterNo,
+      return new ItemSubscriberMeterBinding((MaterialCardView) rootView, tvMeterLocation, tvMeterNo,
           tvPrimary);
     }
     String missingId = rootView.getResources().getResourceName(id);

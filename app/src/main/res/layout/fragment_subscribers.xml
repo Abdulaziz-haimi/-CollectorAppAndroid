@@ -2,19 +2,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:padding="16dp"
+    android:layoutDirection="rtl">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="المشتركون"
+        android:textColor="@color/textPrimaryColor"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="ابحث بالاسم أو الهاتف أو رقم العداد"
+        android:textColor="@color/textSecondaryColor"
+        android:textSize="14sp" />
 
     <EditText
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="بحث بالاسم أو الهاتف أو العداد" />
+        android:layout_height="54dp"
+        android:layout_marginTop="14dp"
+        android:background="@android:drawable/edit_text"
+        android:hint="بحث بالاسم أو الهاتف أو العداد"
+        android:inputType="text"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:singleLine="true"
+        android:textColor="@color/textPrimaryColor"
+        android:textColorHint="@color/textSecondaryColor" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSubscribers"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="12dp"
         android:layout_weight="1"
-        android:layout_marginTop="12dp" />
+        android:clipToPadding="false"
+        android:paddingTop="4dp"
+        android:paddingBottom="12dp" />
+
 </LinearLayout>

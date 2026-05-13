@@ -8,6 +8,7 @@
 
     <color name="backgroundColor">#F5F7FB</color>
     <color name="surfaceColor">#FFFFFF</color>
+
     <color name="textPrimaryColor">#111827</color>
     <color name="textSecondaryColor">#6B7280</color>
 

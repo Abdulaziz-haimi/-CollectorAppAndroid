@@ -13,6 +13,9 @@ import com.watercollector.app.R
 import com.watercollector.app.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 
+import com.watercollector.app.data.remote.ApiDiscoveryClient
+
+
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -55,6 +58,23 @@ class LoginFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.message.collect {
                 binding.tvMessage.text = it.orEmpty()
+            }
+        }
+        binding.btnFindServer.setOnClickListener {
+            binding.tvMessage.text = "جاري البحث عن السيرفر..."
+            binding.btnFindServer.isEnabled = false
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                val url = ApiDiscoveryClient().discoverServer()
+
+                binding.btnFindServer.isEnabled = true
+
+                if (url != null) {
+                    binding.etBaseUrl.setText(url)
+                    binding.tvMessage.text = "تم العثور على السيرفر: $url"
+                } else {
+                    binding.tvMessage.text = "لم يتم العثور على السيرفر. تأكد أن الهاتف والكمبيوتر على نفس الشبكة."
+                }
             }
         }
     }

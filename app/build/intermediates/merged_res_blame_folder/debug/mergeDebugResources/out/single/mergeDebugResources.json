@@ -8,10 +8,6 @@
         "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\layout\\fragment_subscribers.xml"
     },
     {
-        "merged": "com.watercollector.app-debug-53:/layout_fragment_subscriber_details.xml.flat",
-        "source": "com.watercollector.app-main-55:/layout/fragment_subscriber_details.xml"
-    },
-    {
         "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\drawable_ic_launcher.xml.flat",
         "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\drawable\\ic_launcher.xml"
     },
@@ -22,10 +18,6 @@
     {
         "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\navigation_nav_graph.xml.flat",
         "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\navigation\\nav_graph.xml"
-    },
-    {
-        "merged": "com.watercollector.app-debug-53:/layout_item_subscriber_credit.xml.flat",
-        "source": "com.watercollector.app-main-55:/layout/item_subscriber_credit.xml"
     },
     {
         "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\layout_activity_main.xml.flat",
@@ -48,16 +40,12 @@
         "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\layout\\fragment_login.xml"
     },
     {
-        "merged": "com.watercollector.app-debug-53:/layout_item_local_receipt.xml.flat",
-        "source": "com.watercollector.app-main-55:/layout/item_local_receipt.xml"
+        "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\layout_item_subscriber_meter.xml.flat",
+        "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\layout\\item_subscriber_meter.xml"
     },
     {
         "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\xml_network_security_config.xml.flat",
         "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\xml\\network_security_config.xml"
-    },
-    {
-        "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\layout_item_subscriber_meter.xml.flat",
-        "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\layout\\item_subscriber_meter.xml"
     },
     {
         "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\layout_fragment_sync.xml.flat",
@@ -76,8 +64,8 @@
         "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\layout\\item_invoice_allocation.xml"
     },
     {
-        "merged": "com.watercollector.app-debug-53:/layout_item_invoice_allocation.xml.flat",
-        "source": "com.watercollector.app-main-55:/layout/item_invoice_allocation.xml"
+        "merged": "com.watercollector.app-debug-53:/layout_fragment_login.xml.flat",
+        "source": "com.watercollector.app-main-55:/layout/fragment_login.xml"
     },
     {
         "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\layout_fragment_subscriber_details.xml.flat",
