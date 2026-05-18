@@ -101,6 +101,8 @@ layout item_subscriber_invoice
 layout item_subscriber_meter
 navigation nav_graph
 raw mkcert_root_ca
+raw water3_api
+raw water3_root_ca
 string app_name
 string home
 string login

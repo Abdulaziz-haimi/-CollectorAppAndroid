@@ -6,13 +6,16 @@ import com.watercollector.app.data.local.entities.CachedLoginEntity
 import com.watercollector.app.data.remote.NetworkFactory
 import com.watercollector.app.data.remote.model.LoginRequest
 import retrofit2.HttpException
+import java.net.ConnectException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import java.security.MessageDigest
+import javax.net.ssl.SSLHandshakeException
 
 class AuthRepository(
     private val sessionManager: SessionManager,
     private val cachedLoginDao: CachedLoginDao
 ) {
-
     suspend fun login(baseUrl: String, userName: String, password: String): Result<Unit> {
         val normalizedBaseUrl = SessionManager.normalizeBaseUrl(baseUrl)
         val cleanUserName = userName.trim()
@@ -24,39 +27,28 @@ class AuthRepository(
         return try {
             loginOnline(normalizedBaseUrl, cleanUserName, password)
             Result.success(Unit)
+        } catch (e: HttpException) {
+            Result.failure(Exception("فشل تسجيل الدخول من السيرفر: HTTP ${e.code()}"))
+        } catch (e: SSLHandshakeException) {
+            Result.failure(Exception("فشل الاتصال بسبب شهادة HTTPS. ثبّت شهادة Water3Api.cer داخل التطبيق أو على الجوال."))
+        } catch (e: UnknownHostException) {
+            Result.failure(Exception("تعذر الوصول إلى عنوان السيرفر. تأكد من الرابط: $normalizedBaseUrl"))
+        } catch (e: ConnectException) {
+            Result.failure(Exception("تعذر الاتصال بالسيرفر. تأكد أن البرنامج شغال وأن الجوال على نفس الشبكة."))
+        } catch (e: SocketTimeoutException) {
+            Result.failure(Exception("انتهت مهلة الاتصال بالسيرفر. تأكد من الشبكة والجدار الناري."))
         } catch (e: Exception) {
-            if (e is HttpException && e.code() in 400..499) {
-                Result.failure(Exception("اسم المستخدم أو كلمة المرور غير صحيحة."))
+            val cachedResult = loginOffline(normalizedBaseUrl, cleanUserName, password)
+
+            if (cachedResult.isSuccess) {
+                cachedResult
             } else {
-                loginOffline(normalizedBaseUrl, cleanUserName, password)
+                Result.failure(Exception("فشل الاتصال بالسيرفر: ${e.javaClass.simpleName} - ${e.message ?: "خطأ غير معروف"}"))
             }
         }
     }
 
     private suspend fun loginOnline(baseUrl: String, userName: String, password: String) {
-        if (userName == "admin" && password == "123") {
-            sessionManager.baseUrl = baseUrl
-            sessionManager.token = "local-test-token"
-            sessionManager.collectorId = 1
-            sessionManager.collectorName = "Admin"
-            sessionManager.userName = "admin"
-            sessionManager.fullName = "Administrator"
-
-            cachedLoginDao.upsert(
-                CachedLoginEntity(
-                    userName = "admin",
-                    passwordHash = hashPassword(password),
-                    baseUrl = baseUrl,
-                    token = "local-test-token",
-                    collectorId = 1,
-                    collectorName = "Admin",
-                    fullName = "Administrator",
-                    deviceCode = sessionManager.deviceCode
-                )
-            )
-            return
-        }
-
         val api = NetworkFactory.createApiService(baseUrl, null)
 
         val response = api.login(
@@ -98,9 +90,7 @@ class AuthRepository(
         password: String
     ): Result<Unit> {
         val cached = cachedLoginDao.getByUserName(userName)
-            ?: return Result.failure(
-                Exception("لا يوجد إنترنت، ولا توجد بيانات دخول محفوظة لهذا المستخدم.")
-            )
+            ?: return Result.failure(Exception("لا توجد بيانات دخول محفوظة لهذا المستخدم."))
 
         if (cached.passwordHash != hashPassword(password)) {
             return Result.failure(Exception("كلمة المرور غير صحيحة للبيانات المحفوظة."))
