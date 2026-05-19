@@ -5,17 +5,21 @@ import com.watercollector.app.data.local.dao.CachedLoginDao
 import com.watercollector.app.data.local.entities.CachedLoginEntity
 import com.watercollector.app.data.remote.NetworkFactory
 import com.watercollector.app.data.remote.model.LoginRequest
+import org.json.JSONObject
 import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.security.MessageDigest
+import javax.net.ssl.SSLException
 import javax.net.ssl.SSLHandshakeException
+import javax.net.ssl.SSLPeerUnverifiedException
 
 class AuthRepository(
     private val sessionManager: SessionManager,
     private val cachedLoginDao: CachedLoginDao
 ) {
+
     suspend fun login(baseUrl: String, userName: String, password: String): Result<Unit> {
         val normalizedBaseUrl = SessionManager.normalizeBaseUrl(baseUrl)
         val cleanUserName = userName.trim()
@@ -27,28 +31,73 @@ class AuthRepository(
         return try {
             loginOnline(normalizedBaseUrl, cleanUserName, password)
             Result.success(Unit)
-        } catch (e: HttpException) {
-            Result.failure(Exception("فشل تسجيل الدخول من السيرفر: HTTP ${e.code()}"))
-        } catch (e: SSLHandshakeException) {
-            Result.failure(Exception("فشل الاتصال بسبب شهادة HTTPS. ثبّت شهادة Water3Api.cer داخل التطبيق أو على الجوال."))
-        } catch (e: UnknownHostException) {
-            Result.failure(Exception("تعذر الوصول إلى عنوان السيرفر. تأكد من الرابط: $normalizedBaseUrl"))
-        } catch (e: ConnectException) {
-            Result.failure(Exception("تعذر الاتصال بالسيرفر. تأكد أن البرنامج شغال وأن الجوال على نفس الشبكة."))
-        } catch (e: SocketTimeoutException) {
-            Result.failure(Exception("انتهت مهلة الاتصال بالسيرفر. تأكد من الشبكة والجدار الناري."))
-        } catch (e: Exception) {
-            val cachedResult = loginOffline(normalizedBaseUrl, cleanUserName, password)
 
-            if (cachedResult.isSuccess) {
-                cachedResult
-            } else {
-                Result.failure(Exception("فشل الاتصال بالسيرفر: ${e.javaClass.simpleName} - ${e.message ?: "خطأ غير معروف"}"))
-            }
+        } catch (e: HttpException) {
+            // هنا السيرفر وصل ورفض الطلب، لذلك لا ندخل Offline
+            Result.failure(Exception(readApiError(e)))
+
+        } catch (e: SSLHandshakeException) {
+            Result.failure(
+                Exception(
+                    "فشل الاتصال بسبب شهادة HTTPS.\n" +
+                            "تأكد أن water3_root_ca.cer موجودة داخل التطبيق، وأن شهادة السيرفر تحتوي IP الحالي داخل SAN."
+                )
+            )
+
+        } catch (e: SSLPeerUnverifiedException) {
+            Result.failure(
+                Exception(
+                    "فشل التحقق من شهادة HTTPS.\n" +
+                            "غالبًا شهادة السيرفر لا تحتوي نفس IP المستخدم في الرابط:\n$normalizedBaseUrl"
+                )
+            )
+
+        } catch (e: SSLException) {
+            Result.failure(
+                Exception(
+                    "خطأ SSL/HTTPS: ${e.message ?: "فشل التحقق من الاتصال الآمن"}"
+                )
+            )
+
+        } catch (e: UnknownHostException) {
+            loginOfflineOrConnectionError(
+                normalizedBaseUrl,
+                cleanUserName,
+                password,
+                "تعذر الوصول إلى عنوان السيرفر. تأكد من الرابط:\n$normalizedBaseUrl"
+            )
+
+        } catch (e: ConnectException) {
+            loginOfflineOrConnectionError(
+                normalizedBaseUrl,
+                cleanUserName,
+                password,
+                "تعذر الاتصال بالسيرفر. تأكد أن برنامج Water3 شغال وأن الجوال على نفس الشبكة."
+            )
+
+        } catch (e: SocketTimeoutException) {
+            loginOfflineOrConnectionError(
+                normalizedBaseUrl,
+                cleanUserName,
+                password,
+                "انتهت مهلة الاتصال بالسيرفر. تأكد من الشبكة والجدار الناري والمنفذ 8443."
+            )
+
+        } catch (e: Exception) {
+            loginOfflineOrConnectionError(
+                normalizedBaseUrl,
+                cleanUserName,
+                password,
+                "فشل الاتصال بالسيرفر: ${e.javaClass.simpleName} - ${e.message ?: "خطأ غير معروف"}"
+            )
         }
     }
 
-    private suspend fun loginOnline(baseUrl: String, userName: String, password: String) {
+    private suspend fun loginOnline(
+        baseUrl: String,
+        userName: String,
+        password: String
+    ) {
         val api = NetworkFactory.createApiService(baseUrl, null)
 
         val response = api.login(
@@ -57,31 +106,49 @@ class AuthRepository(
                 password = password,
                 deviceCode = sessionManager.deviceCode,
                 deviceName = "Android Phone",
-                deviceModel = Build.MODEL,
+                deviceModel = Build.MODEL ?: "Android",
                 appVersion = "1.0.0"
             )
         )
+
+        val responseUserName = response.userName.ifBlank { userName }
+        val responseDeviceCode = response.deviceCode.ifBlank { sessionManager.deviceCode }
 
         sessionManager.baseUrl = baseUrl
         sessionManager.token = response.token
         sessionManager.collectorId = response.collectorId
         sessionManager.collectorName = response.collectorName
-        sessionManager.userName = response.userName
+        sessionManager.userName = responseUserName
         sessionManager.fullName = response.fullName
-        sessionManager.deviceCode = response.deviceCode
+        sessionManager.deviceCode = responseDeviceCode
 
         cachedLoginDao.upsert(
             CachedLoginEntity(
-                userName = response.userName,
-                passwordHash = hashPassword(password),
+                userName = responseUserName,
+                passwordHash = hashPassword(password, responseDeviceCode),
                 baseUrl = baseUrl,
                 token = response.token,
                 collectorId = response.collectorId,
                 collectorName = response.collectorName,
                 fullName = response.fullName,
-                deviceCode = response.deviceCode
+                deviceCode = responseDeviceCode
             )
         )
+    }
+
+    private suspend fun loginOfflineOrConnectionError(
+        baseUrl: String,
+        userName: String,
+        password: String,
+        connectionMessage: String
+    ): Result<Unit> {
+        val cachedResult = loginOffline(baseUrl, userName, password)
+
+        return if (cachedResult.isSuccess) {
+            cachedResult
+        } else {
+            Result.failure(Exception(connectionMessage))
+        }
     }
 
     private suspend fun loginOffline(
@@ -92,7 +159,9 @@ class AuthRepository(
         val cached = cachedLoginDao.getByUserName(userName)
             ?: return Result.failure(Exception("لا توجد بيانات دخول محفوظة لهذا المستخدم."))
 
-        if (cached.passwordHash != hashPassword(password)) {
+        val expectedHash = hashPassword(password, cached.deviceCode)
+
+        if (cached.passwordHash != expectedHash) {
             return Result.failure(Exception("كلمة المرور غير صحيحة للبيانات المحفوظة."))
         }
 
@@ -107,9 +176,48 @@ class AuthRepository(
         return Result.success(Unit)
     }
 
-    private fun hashPassword(password: String): String {
-        val input = "${sessionManager.deviceCode}:$password"
-        val bytes = MessageDigest.getInstance("SHA-256").digest(input.toByteArray())
+    private fun readApiError(e: HttpException): String {
+        val fallback = when (e.code()) {
+            400 -> "بيانات تسجيل الدخول غير مكتملة أو غير صحيحة."
+            401 -> "فشل تسجيل الدخول: اسم المستخدم أو كلمة المرور غير صحيحة، أو الجهاز غير مصرح له."
+            403 -> "ليس لديك صلاحية الدخول من تطبيق المحصل."
+            404 -> "رابط تسجيل الدخول غير موجود في السيرفر. تأكد من رابط الخادم."
+            500 -> "خطأ داخلي في السيرفر."
+            else -> "فشل تسجيل الدخول من السيرفر: HTTP ${e.code()}"
+        }
+
+        return try {
+            val body = e.response()?.errorBody()?.string()
+
+            if (body.isNullOrBlank()) {
+                fallback
+            } else {
+                val trimmed = body.trim()
+
+                if (trimmed.startsWith("{")) {
+                    val json = JSONObject(trimmed)
+
+                    json.optString("message").ifBlank {
+                        json.optString("error").ifBlank {
+                            json.optString("title").ifBlank {
+                                json.optString("detail").ifBlank {
+                                    fallback
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    trimmed.ifBlank { fallback }
+                }
+            }
+        } catch (_: Exception) {
+            fallback
+        }
+    }
+
+    private fun hashPassword(password: String, deviceCode: String): String {
+        val input = "$deviceCode:$password"
+        val bytes = MessageDigest.getInstance("SHA-256").digest(input.toByteArray(Charsets.UTF_8))
         return bytes.joinToString("") { "%02x".format(it) }
     }
 }

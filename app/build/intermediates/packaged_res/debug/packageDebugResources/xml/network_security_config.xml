@@ -4,8 +4,6 @@
     <base-config cleartextTrafficPermitted="false">
         <trust-anchors>
             <certificates src="system" />
-            <certificates src="user" />
-            <certificates src="@raw/mkcert_root_ca" />
             <certificates src="@raw/water3_root_ca" />
         </trust-anchors>
     </base-config>

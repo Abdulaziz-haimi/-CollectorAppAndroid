@@ -1,11 +1,11 @@
 [
     {
-        "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\layout_fragment_subscribers.xml.flat",
-        "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\layout\\fragment_subscribers.xml"
-    },
-    {
         "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\layout_fragment_local_receipts.xml.flat",
         "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\layout\\fragment_local_receipts.xml"
+    },
+    {
+        "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\layout_fragment_subscribers.xml.flat",
+        "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\layout\\fragment_subscribers.xml"
     },
     {
         "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\drawable_ic_launcher.xml.flat",
@@ -74,6 +74,10 @@
     {
         "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\layout_item_invoice_allocation.xml.flat",
         "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\layout\\item_invoice_allocation.xml"
+    },
+    {
+        "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\raw_water3_root_ca.cer.flat",
+        "source": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-main-55:\\raw\\water3_root_ca.cer"
     },
     {
         "merged": "C:\\Users\\Abdulaziz\\.gradle\\daemon\\8.7\\com.watercollector.app-debug-53:\\layout_fragment_subscriber_details.xml.flat",
